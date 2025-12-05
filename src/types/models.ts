@@ -19,6 +19,7 @@ export interface Post {
   likes_count: number;
   reposts_count: number;
   replies_count: number;
+  is_liked?: boolean;
 }
 
 export interface Like {

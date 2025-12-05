@@ -2,10 +2,10 @@
   <div class="feed-view">
     <header class="header">
       <div class="tab-selector">
-        <button class="tab" :class="{ active: activeFeedTab == "forYou" }">
+        <button class="tab" :class="{ active: activeFeedTab === 'forYou' }" @click="store.activeFeedTab = 'forYou'">
           For You
         </button>
-        <button class="tab" :class="{ active: activeFeedTab == "following" }">
+        <button class="tab" :class="{ active: activeFeedTab === 'following' }" @click="store.activeFeedTab = 'following'">
           Following
         </button>
       </div>
@@ -48,7 +48,7 @@
               </section>
               <section class="timestamp-section">
                 <div class="timestamp">
-                  {{ formatted_timestamp(post.created_at) }}
+                  {{ store.formattedTimestamp(post.created_at) }}
                 </div>
               </section>
               <section class="actions-section">
@@ -58,7 +58,7 @@
                 <button class="repost-button" data-icon="repeat">
                   {{ post.reposts_count > 0 ? post.reposts_count : "" }}
                 </button>
-                <button class="like-button" :data-icon="post.is_liked ? "favorite" : "favorite_border"" :class="{ [post.is_liked ? red : textSecondary]: true }">
+                <button class="like-button" :data-icon="post.is_liked ? 'favorite' : 'favorite_border'" :class="{ 'text-red': post.is_liked }">
                   {{ post.likes_count > 0 ? post.likes_count : "" }}
                 </button>
                 <button class="share-button" data-icon="ios_share">
@@ -90,24 +90,14 @@ const store = useAppStore();
 
 // State from store
 const activeFeedTab = computed(() => store.activeFeedTab);
-const forYouPosts = computed(() => store.forYouPosts);
-const followingPosts = computed(() => store.followingPosts);
 const isLoading = computed(() => store.isLoading);
-const cursor = computed(() => store.cursor);
-const hasMore = computed(() => store.hasMore);
 
 // Computed properties from store
 const filteredPosts = computed(() => store.filteredPosts);
-const formattedTimestamp = computed(() => store.formattedTimestamp);
 const postCount = computed(() => store.postCount);
 
 // Helper functions
 const getUserById = store.getUserById;
-const getPostById = store.getPostById;
-const getLikeById = store.getLikeById;
-const getRepostById = store.getRepostById;
-const getBookmarkById = store.getBookmarkById;
-
 </script>
 
 <style scoped>
